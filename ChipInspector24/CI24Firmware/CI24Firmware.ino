@@ -16,6 +16,9 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
+#include "LogicDump.h"
+#include "PinControl.h"
+
 const char* HELP_COMMAND = "help";
 const char* LOGICDUMP_COMMAND = "logicdump";
 
@@ -25,6 +28,8 @@ const char* LOGICDUMP_SUPPORTED_PIN_COUNTS_TEXT = "10, 12, 14, 16, 18, 20, 22 or
 void setup()
 {
   Serial.begin(9600); // USB is always 12 Mbit/sec
+
+  DebugCheckSocketPins();
 }
 
 String ReadCommandString()
@@ -70,15 +75,6 @@ void ShowHelp()
 bool IsSupportedDevicePinCount(int pinCount)
 {
   return pinCount >= 10 && pinCount <= 24 && (pinCount % 0x01) == 0;
-}
-
-void LogicDump(int pinCount)
-{
-  Serial.print("Extracting logic tables for device with ");
-  Serial.print(pinCount);
-  Serial.println(" pins");
-
-  //TODO: Implement me.
 }
 
 // the loop routine runs over and over again forever:
